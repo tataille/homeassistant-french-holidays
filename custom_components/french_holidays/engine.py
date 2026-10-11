@@ -14,10 +14,10 @@ def normalize_school(records):
             continue
         start, end = school_date(row["start_date"]), school_date(row["end_date"])
         if end > start:
-            events.add((start.isoformat(), end.isoformat(), row["description"]))
+            events.add((start.isoformat(), end.isoformat(), row["description"], row.get("zones") or ""))
     if not events:
         raise ValueError("No school holiday records for this academy")
-    return [dict(start=s, end=e, name=n) for s, e, n in sorted(events)]
+    return [dict(start=s, end=e, name=n, zone=z or None) for s, e, n, z in sorted(events)]
 
 def validate_public(payload):
     if not isinstance(payload, dict) or not payload:
@@ -28,14 +28,29 @@ def validate_public(payload):
             raise ValueError("Invalid holiday name")
     return payload
 
-def states(today, public, school):
+def states(today, public, school, *, academy=None, region=None, version=None):
     tomorrow = today + timedelta(days=1)
     current = next((e for e in school if e["start"] <= today.isoformat() < e["end"]), None)
     following = next((e for e in school if e["start"] > today.isoformat()), None)
-    next_public = next(((d,n) for d,n in sorted(public.items()) if d >= today.isoformat()), None)
+    next_public = next(((d,n) for d,n in sorted(public.items()) if d > today.isoformat()), None)
     school_known = bool(school) and min(e["start"] for e in school) <= today.isoformat() < max(e["end"] for e in school)
     public_known = any(d.startswith(str(today.year)+"-") for d in public)
+    beginning_year = today.year if today.month >= 9 else today.year - 1
+    zone_event = current or following or (school[-1] if school else {})
     return {
+        "day": (today.weekday() + 1) % 7,
+        "year": today.year,
+        "school_period": f"{beginning_year}-{beginning_year + 1}",
+        "academy": academy,
+        "region": region,
+        "zones": zone_event.get("zone"),
+        "version": version,
+        "public_holiday_name": public.get(today.isoformat()),
+        "school_holidays_end_date": date.fromisoformat(current["end"]) if current else None,
+        "next_school_holidays": following["name"] if following else None,
+        "next_school_holidays_start": date.fromisoformat(following["start"]) if following else None,
+        "next_school_holidays_end": date.fromisoformat(following["end"]) if following else None,
+        "next_school_holidays_countdown": (date.fromisoformat(following["start"])-today).days if following else None,
         "public_holiday": today.isoformat() in public if public_known else None,
         "public_holiday_tomorrow": tomorrow.isoformat() in public if any(d.startswith(str(tomorrow.year)+"-") for d in public) else None,
         "school_holidays": current is not None if school_known else None,
