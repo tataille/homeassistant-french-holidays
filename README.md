@@ -6,6 +6,10 @@
 [![Licence Apache 2.0](https://img.shields.io/badge/Licence-Apache%202.0-blue)](LICENSE)
 [![Home Assistant 2026.1+](https://img.shields.io/badge/Home%20Assistant-2026.1%2B-18BCF2)](https://www.home-assistant.io/)
 
+[![Téléchargements des fichiers de release](https://img.shields.io/github/downloads/tataille/homeassistant-french-holidays/total?label=t%C3%A9l%C3%A9chargements%20des%20releases)](https://github.com/tataille/homeassistant-french-holidays/releases)
+
+*Le compteur mesure les téléchargements des fichiers joints aux releases GitHub. Il ne mesure pas le nombre d’utilisateurs ou d’installations, ni les téléchargements des archives de sources générées automatiquement. Avant la première release contenant un fichier joint, le badge peut être indisponible.*
+
 **Vos jours fériés et vos vacances scolaires directement dans Home Assistant.**
 
 French Holidays vous indique si aujourd’hui ou demain est un jour férié, si les
@@ -199,6 +203,12 @@ Consultez ensuite **Paramètres → Système → Journaux** en recherchant `fren
 Vérifiez la langue de votre profil, redémarrez Home Assistant et rechargez l’interface.
 Un nom ou une icône personnalisés manuellement dans Home Assistant peuvent prendre
 le dessus sur ceux fournis par l’intégration.
+
+## Soutenir le projet
+
+Si French Holidays vous rend service, vous pouvez soutenir son développement et sa maintenance en m’offrant un café. Merci pour votre soutien !
+
+[![Buy Me a Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/jeanmarctaz)
 
 ## Sources officielles et assistance
 
