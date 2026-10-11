@@ -19,7 +19,7 @@ jobs:
     timeout-minutes: 10
     env:
       GH_TOKEN: ${{ github.token }}
-      RELEASE_TARGET: 1a7de6c3a6a7a6181befb0b085fea57ed282fd97
+      RELEASE_TARGET: ${{ github.sha }}
     steps:
       - name: Require successful validation of release source
         run: |
