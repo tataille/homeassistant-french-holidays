@@ -18,7 +18,7 @@ Copier le texte ci-dessous dans la description de la PR :
 
 ## Checklist
 
-- [ ] I've read the [publishing documentation](https://hacs.xyz/docs/publish/start).
+- [x] I've read the [publishing documentation](https://hacs.xyz/docs/publish/start).
 - [x] I've added the [HACS action](https://hacs.xyz/docs/publish/action) to my repository.
 - [x] (For integrations only) I've added the [hassfest action](https://developers.home-assistant.io/blog/2020/04/16/hassfest/) to my repository.
 - [x] The actions are passing without any disabled checks in my repository.
