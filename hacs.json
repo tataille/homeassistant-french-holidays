@@ -1,5 +1,6 @@
 {
   "name": "French Holidays",
   "homeassistant": "2026.1.0",
-  "render_readme": true
+  "render_readme": true,
+  "country": "FR"
 }

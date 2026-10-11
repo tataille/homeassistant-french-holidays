@@ -48,10 +48,14 @@ Cette intégration reprend les informations et fonctionnalités du module origin
 - Un accès Internet pour télécharger les calendriers officiels au premier démarrage.
 - HACS pour l’installation guidée, ou un accès au dossier de configuration pour l’installation manuelle.
 
-Le projet est une intégration personnalisée en version **0.1.1**.
+Le projet est une intégration personnalisée en version **0.1.2**.
 Il n’est pas intégré à Home Assistant Core ni référencé dans le catalogue HACS par défaut.
 
 ## Installer avec HACS
+
+[![Ouvrir dans HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=tataille&repository=homeassistant-french-holidays&category=integration)
+
+Le bouton ouvre ce dépôt dans HACS, qui doit déjà être installé. Vous pouvez aussi suivre les étapes ci-dessous.
 
 1. Ouvrez **HACS**, puis le menu **⋮ → Dépôts personnalisés**.
 2. Ajoutez `https://github.com/tataille/homeassistant-french-holidays` avec le type **Intégration**.
