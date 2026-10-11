@@ -1,0 +1,54 @@
+{
+  "title": "French Holidays",
+  "config": {
+    "step": {
+      "user": {
+        "title": "French Holidays",
+        "description": "Select the school academy and public holiday region independently.",
+        "data": {
+          "academy": "Academy",
+          "region": "Public holiday region"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "This combination is already configured."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "public_holiday": {
+        "name": "Public holiday"
+      },
+      "public_holiday_tomorrow": {
+        "name": "Public holiday tomorrow"
+      },
+      "school_holidays": {
+        "name": "School holidays"
+      },
+      "school_holidays_tomorrow": {
+        "name": "School holidays tomorrow"
+      },
+      "weekend": {
+        "name": "Weekend"
+      },
+      "working_day": {
+        "name": "Working day"
+      }
+    },
+    "sensor": {
+      "next_public_holiday": {
+        "name": "Next public holiday"
+      },
+      "next_public_holiday_date": {
+        "name": "Next public holiday date"
+      },
+      "days_until_school_holidays": {
+        "name": "Days until school holidays"
+      },
+      "school_holiday_name": {
+        "name": "School holiday name"
+      }
+    }
+  }
+}
