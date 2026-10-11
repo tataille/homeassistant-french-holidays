@@ -1,0 +1,29 @@
+alias: "French Holidays - Chauffage et vacances scolaires"
+description: "Consigne du matin : 20 °C pendant les vacances, 19 °C hors vacances."
+triggers:
+  - trigger: time
+    at: "06:30:00"
+conditions: []
+actions:
+  - choose:
+      - conditions:
+          - condition: state
+            entity_id: binary_sensor.vos_vacances_scolaires
+            state: "on"
+        sequence:
+          - action: climate.set_temperature
+            target:
+              entity_id: climate.votre_chauffage
+            data:
+              temperature: 20
+      - conditions:
+          - condition: state
+            entity_id: binary_sensor.vos_vacances_scolaires
+            state: "off"
+        sequence:
+          - action: climate.set_temperature
+            target:
+              entity_id: climate.votre_chauffage
+            data:
+              temperature: 19
+mode: single

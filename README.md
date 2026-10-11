@@ -156,6 +156,15 @@ fiche de l’intégration ou dans **Outils de développement → États** avant 
 Pour une automatisation de réveil, vous pouvez par exemple ajouter une condition
 sur **Jour ouvré = activé**, et éventuellement **Vacances scolaires = désactivé**.
 
+## Exemples d’automatisation
+
+Deux exemples YAML sont disponibles dans le [guide d’automatisation](docs/AUTOMATIONS.md) :
+
+- notification de réveil à 07:00 les jours ouvrés, hors vacances scolaires ;
+- consigne de chauffage du matin adaptée aux vacances scolaires.
+
+Remplacez les identifiants d’entités par ceux de votre installation, puis adaptez les horaires, les actions et les températures. Ces exemples se configurent séparément et ne sont pas installés automatiquement.
+
 ## Mise à jour
 
 Avec HACS, téléchargez la mise à jour proposée puis redémarrez Home Assistant.

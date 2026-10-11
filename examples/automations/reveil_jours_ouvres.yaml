@@ -1,0 +1,19 @@
+alias: "French Holidays - Réveil les jours ouvrés"
+description: "Notification à 07:00 les jours ouvrés hors vacances scolaires."
+triggers:
+  - trigger: time
+    at: "07:00:00"
+conditions:
+  - condition: state
+    entity_id: binary_sensor.votre_jour_ouvre
+    state: "on"
+  - condition: state
+    entity_id: binary_sensor.vos_vacances_scolaires
+    state: "off"
+actions:
+  - action: persistent_notification.create
+    data:
+      title: "Bonjour !"
+      message: "Aujourd’hui est un jour ouvré hors vacances scolaires."
+      notification_id: french_holidays_reveil
+mode: single
