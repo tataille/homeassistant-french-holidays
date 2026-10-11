@@ -22,6 +22,8 @@ jobs:
       RELEASE_TARGET: a7a1dfd314a07ab600b33a7dc3684807ff69dc49
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
