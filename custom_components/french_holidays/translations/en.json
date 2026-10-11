@@ -48,6 +48,45 @@
       },
       "school_holiday_name": {
         "name": "School holiday name"
+      },
+      "public_holiday_name": {
+        "name": "Public holiday name"
+      },
+      "school_holidays_end_date": {
+        "name": "School holidays end date"
+      },
+      "next_school_holidays": {
+        "name": "Next school holidays"
+      },
+      "next_school_holidays_start": {
+        "name": "Next school holidays start"
+      },
+      "next_school_holidays_end": {
+        "name": "Next school holidays end"
+      },
+      "next_school_holidays_countdown": {
+        "name": "Next school holidays countdown"
+      },
+      "day": {
+        "name": "Day of week"
+      },
+      "year": {
+        "name": "Year"
+      },
+      "school_period": {
+        "name": "School year"
+      },
+      "academy": {
+        "name": "Academy"
+      },
+      "region": {
+        "name": "Public holiday region"
+      },
+      "zones": {
+        "name": "School zone"
+      },
+      "version": {
+        "name": "Integration version"
       }
     }
   }
