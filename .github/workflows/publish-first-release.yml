@@ -1,0 +1,68 @@
+name: Publish first release
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/publish-first-release.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-v0.1.1
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RELEASE_TARGET: a7a1dfd314a07ab600b33a7dc3684807ff69dc49
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Verify version and run tests
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          manifest = json.loads(Path("custom_components/french_holidays/manifest.json").read_text())
+          assert manifest["version"] == "0.1.1"
+          PY
+          python -m unittest discover -s tests -v
+          python -m compileall -q custom_components
+      - name: Package verified release source
+        run: |
+          python - <<'PY'
+          import subprocess
+          import tempfile
+          import zipfile
+          from pathlib import Path
+          with tempfile.TemporaryDirectory() as temporary:
+              root = Path(temporary)
+              archive = root / "source.zip"
+              subprocess.run(["git", "archive", "--format=zip", "--output", str(archive), "a7a1dfd314a07ab600b33a7dc3684807ff69dc49"], check=True)
+              with zipfile.ZipFile(archive) as source, zipfile.ZipFile("homeassistant-french-holidays-v0.1.1.zip", "w", zipfile.ZIP_DEFLATED) as output:
+                  for name in source.namelist():
+                      if name.startswith(("custom_components/", "docs/")) or name in {"README.md", "LICENSE", "hacs.json"}:
+                          if not name.endswith("/"):
+                              output.writestr(name, source.read(name))
+          PY
+          sha256sum homeassistant-french-holidays-v0.1.1.zip > SHA256SUMS.txt
+      - name: Publish GitHub release with install archive
+        run: |
+          if gh release view v0.1.1 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release v0.1.1 already exists; leaving it unchanged."
+            exit 0
+          fi
+          gh release create v0.1.1 \
+            homeassistant-french-holidays-v0.1.1.zip SHA256SUMS.txt \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$RELEASE_TARGET" \
+            --title "French Holidays v0.1.1 — Première publication" \
+            --notes-file docs/releases/v0.1.1.md \
+            --latest
