@@ -1,5 +1,11 @@
 # French Holidays pour Home Assistant
 
+![French Holidays — jours fériés et vacances scolaires](docs/images/banner.svg)
+
+[![Validation](https://github.com/tataille/homeassistant-french-holidays/actions/workflows/validate.yml/badge.svg)](https://github.com/tataille/homeassistant-french-holidays/actions/workflows/validate.yml)
+[![Licence Apache 2.0](https://img.shields.io/badge/Licence-Apache%202.0-blue)](LICENSE)
+[![Home Assistant 2026.1+](https://img.shields.io/badge/Home%20Assistant-2026.1%2B-18BCF2)](https://www.home-assistant.io/)
+
 **Vos jours fériés et vos vacances scolaires directement dans Home Assistant.**
 
 French Holidays vous indique si aujourd’hui ou demain est un jour férié, si les
@@ -19,6 +25,12 @@ l’interface Home Assistant, sans ajouter de configuration YAML.
 - Les informations de configuration : académie, région, zone et année scolaire.
 
 **23 entités disponibles**, avec icônes et noms en français et en anglais.
+
+## Aperçu des informations disponibles
+
+![Aperçu illustré des 23 entités French Holidays](docs/images/entities-overview.svg)
+
+*Illustration des informations disponibles, avec des valeurs d’exemple. Ce visuel n’est pas une capture d’écran de Home Assistant et ne correspond pas à une carte installée automatiquement. La présentation réelle dépend de votre tableau de bord et de votre thème.*
 
 ## Avant de commencer
 
