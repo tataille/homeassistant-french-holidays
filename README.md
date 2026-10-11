@@ -1,123 +1,197 @@
-# French Holidays — v0.1.1
+# French Holidays pour Home Assistant
 
-Intégration personnalisée Home Assistant en Python, indépendante de Node-RED.
-Configuration proposée : **académie Nantes (zone B)** et **jours fériés Martinique**.
-Ces choix sont indépendants : le calendrier scolaire est celui de Nantes, pas celui de Martinique.
+**Vos jours fériés et vos vacances scolaires directement dans Home Assistant.**
 
-## Installation manuelle — Home Assistant Docker
+French Holidays vous indique si aujourd’hui ou demain est un jour férié, si les
+vacances scolaires sont en cours et quand commenceront les prochaines vacances.
+Vous pouvez afficher ces informations sur votre tableau de bord ou les utiliser
+pour adapter vos automatisations : réveil, chauffage, volets ou notifications.
 
-1. Copier le dossier `custom_components/french_holidays` de cette archive dans
-   le dossier de configuration Home Assistant : `/config/custom_components/french_holidays`.
-   Copier depuis l’hôte dans le répertoire monté sur `/config` du conteneur.
-2. Redémarrer Home Assistant (par exemple `docker restart homeassistant`, si c’est le nom du conteneur).
-3. Paramètres → Appareils et services → Ajouter une intégration → **French Holidays**.
-4. Confirmer **Nantes** et **martinique**, proposés par défaut.
+L’intégration fonctionne sans Node-RED et sans MQTT. Elle se configure depuis
+l’interface Home Assistant, sans ajouter de configuration YAML.
 
-Aucune entrée YAML n’est nécessaire. `examples/configuration.json` décrit les paramètres,
-ce n’est pas un fichier à importer dans Home Assistant. Ne pas modifier `.storage` à la main.
-Pour changer de combinaison dans cette version, supprimer l’entrée et la recréer.
+## Ce que vous obtenez
 
-## HACS
+- Les jours fériés d’aujourd’hui et de demain, le nom du jour férié actuel et le prochain jour férié.
+- Les vacances scolaires d’aujourd’hui et de demain, le nom et la fin de la période en cours.
+- Le nom, le début et la fin des prochaines vacances, avec un compte à rebours.
+- Les indicateurs week-end et jour ouvré.
+- Les informations de configuration : académie, région, zone et année scolaire.
 
-Une fois ce projet publié dans votre dépôt GitHub, l’ajouter comme dépôt personnalisé
-HACS de type **Intégration**, installer French Holidays et redémarrer.
-Dépôt : `tataille/homeassistant-french-holidays`. Le projet n’est pas référencé
-officiellement dans HACS.
+**23 entités disponibles**, avec icônes et noms en français et en anglais.
 
-## Entités
+## Avant de commencer
 
-| Type | Nom |
+- Home Assistant **2026.1 ou plus récent**.
+- Un accès Internet pour télécharger les calendriers officiels au premier démarrage.
+- HACS pour l’installation guidée, ou un accès au dossier de configuration pour l’installation manuelle.
+
+Le projet est une intégration personnalisée en version **0.1.1**.
+Il n’est pas intégré à Home Assistant Core ni référencé dans le catalogue HACS par défaut.
+
+## Installer avec HACS
+
+1. Ouvrez **HACS**, puis le menu **⋮ → Dépôts personnalisés**.
+2. Ajoutez `https://github.com/tataille/homeassistant-french-holidays` avec le type **Intégration**.
+3. Recherchez **French Holidays** dans HACS et téléchargez l’intégration.
+4. Redémarrez Home Assistant.
+5. Ouvrez **Paramètres → Appareils et services → Ajouter une intégration** et recherchez **French Holidays**.
+
+## Installer manuellement
+
+1. [Téléchargez le projet](https://github.com/tataille/homeassistant-french-holidays/archive/refs/heads/main.zip) et décompressez l’archive.
+2. Copiez le dossier `custom_components/french_holidays` dans le dossier de configuration de Home Assistant.
+3. Vérifiez que vous obtenez le chemin `/config/custom_components/french_holidays/manifest.json`.
+4. Redémarrez Home Assistant, puis ajoutez **French Holidays** dans **Paramètres → Appareils et services**.
+
+Avec Home Assistant Docker, copiez les fichiers dans le dossier de l’hôte monté
+sur `/config`. Ne copiez pas le dossier complet du dépôt dans `custom_components`.
+
+## Choisir votre calendrier
+
+L’intégration propose deux choix indépendants :
+
+| Paramètre | À quoi sert-il ? | Exemple proposé par défaut |
+|---|---|---|
+| Académie | Détermine les vacances scolaires | Nantes — zone B |
+| Région des jours fériés | Détermine les jours fériés | Martinique |
+
+**Nantes + Martinique signifie : vacances scolaires de Nantes et jours fériés de Martinique.**
+Ce choix ne sélectionne pas les vacances scolaires de Martinique.
+Pour un usage local à Nantes, choisissez généralement Nantes et `metropole`.
+
+Les régions proposées sont `metropole`, `alsace-moselle`, `guadeloupe`, `martinique`,
+`guyane`, `la-reunion` et `mayotte`.
+
+Pour changer votre combinaison dans cette version, supprimez l’entrée de l’intégration
+puis ajoutez-la avec les nouveaux paramètres. Pour une simple mise à jour du code,
+conservez l’entrée existante.
+
+## Comprendre les capteurs
+
+### Jours fériés et rythme de la semaine
+
+| Entité | Signification |
 |---|---|
-| binary_sensor | Public holiday |
-| binary_sensor | Public holiday tomorrow |
-| binary_sensor | School holidays |
-| binary_sensor | School holidays tomorrow |
-| binary_sensor | Weekend |
-| binary_sensor | Working day |
-| sensor | Next public holiday |
-| sensor | Next public holiday date |
-| sensor | Days until school holidays |
-| sensor | School holiday name |
+| Jour férié aujourd’hui | Aujourd’hui est férié dans la région choisie |
+| Jour férié demain | Demain est férié dans la région choisie |
+| Nom du jour férié actuel | Nom du jour férié, uniquement lorsqu’aujourd’hui est férié |
+| Prochain jour férié | Nom du premier jour férié strictement après aujourd’hui |
+| Date du prochain jour férié | Date correspondante |
+| Week-end | Aujourd’hui est samedi ou dimanche |
+| Jour ouvré | Aujourd’hui est du lundi au vendredi et n’est pas férié |
 
-Les identifiants réels sont générés par Home Assistant à partir du nom de l’appareil.
-Les retrouver dans la fiche de l’intégration avant de les utiliser dans une automatisation.
-Le prochain jour férié est strictement après aujourd’hui, comme dans Node-RED. Le compteur vaut zéro pendant les vacances.
-Le nom des vacances est inconnu hors vacances. Un jour ouvré signifie ici lundi à vendredi,
-hors jour férié : il ne reflète pas votre contrat ni vos congés.
+L’indicateur « Jour ouvré » ne tient pas compte de votre contrat de travail,
+de vos congés personnels ni des vacances scolaires.
 
-## Sources et dates
+### Vacances scolaires
 
-- https://calendrier.api.gouv.fr/jours-feries/martinique.json
-- https://data.education.gouv.fr/explore/dataset/fr-en-calendrier-scolaire/
-- Documentation architecture : https://developers.home-assistant.io/docs/integration_fetching_data/
-
-Actualisation distante quotidienne, contrôle horaire et recalcul à minuit dans le
-fuseau configuré dans Home Assistant. Les dates scolaires sont interprétées en Europe/Paris,
-car les dates métropolitaines du jeu officiel sont encodées en UTC à la veille du jour civil.
-Le jour de départ est inclus et la reprise est exclue. Ce sont des états par jour,
-pas une gestion du départ après la classe ni du cas des élèves sans cours le samedi.
-
-Cache persistant via Home Assistant Store. En cas de panne, réutilisation des dernières
-réponses valides et attribut `cached_data: true`. Sans cache au premier démarrage, l’intégration
-réessaie via Home Assistant. Un millésime absent ou un calendrier scolaire dépassé produit
-un état inconnu plutôt qu’un faux « pas de vacances ». Le cache n’est pas embarqué dans le ZIP.
-Une connexion Internet est donc nécessaire pour le premier chargement.
-
-## Validation et limites
-
-Exécuter `python -m unittest discover -s tests -v` et
-`python -m compileall -q custom_components`.
-Tests du moteur : bornes scolaires, UTC/Paris, Martinique, changement d’année,
-week-end, compteur et données manquantes. Les workflows fournissent Hassfest et HACS.
-Cette v0.1.1 doit être testée dans votre Home Assistant avant utilisation opérationnelle.
-Les tests du moteur ne remplacent pas les tests d’intégration du config flow et des pannes HTTP.
-Pas encore d’entités calendar ni de diagnostics. Les champs Node-RED sont couverts selon la table ci-dessous, avec les différences de dates et de valeurs absentes décrites.
-Licence Apache-2.0.
-
-Les entités disposent d’icônes et de noms traduits en français et anglais.
-
-## Correspondance Node-RED — 23 entités
-
-Les 10 entités existantes gardent leurs unique_id. 13 capteurs sont ajoutés.
-Les dates Home Assistant sont de vrais capteurs date (ISO), affichés selon la langue
-utilisateur, au lieu de chaînes JJ/MM/AAAA. Les données absentes sont inconnues (`None`),
-pas `-1`. La période actuelle signifie aujourd’hui : Node-RED peut aussi renseigner
-son nom et sa fin dès la veille si demain est en vacances. Ici les capteurs actuels
-restent inconnus jusqu’au début, et les capteurs prochaines vacances couvrent la veille.
-
-| Champ Node-RED | Clé d’entité Home Assistant |
+| Entité | Signification |
 |---|---|
-| day (dimanche=0, samedi=6) | sensor / day |
-| isPublicHoliday | binary_sensor / public_holiday |
-| isTomorrowPublicHoliday | binary_sensor / public_holiday_tomorrow |
-| publicHolidayName | sensor / public_holiday_name |
-| nextPublicHolidayName | sensor / next_public_holiday |
-| nextPublicHolidayDate | sensor / next_public_holiday_date |
-| isSchoolHolidays | binary_sensor / school_holidays |
-| isTomorrowSchoolHolidays | binary_sensor / school_holidays_tomorrow |
-| schoolHolidaysName | sensor / school_holiday_name |
-| schoolHolidaysEndDate | sensor / school_holidays_end_date |
-| nextSchoolHolidaysCountdownInDays | sensor / next_school_holidays_countdown |
-| nextSchoolHolidaysCoutdownInDays (ancien alias) | attribut du même capteur, sans doublon |
-| nextSchoolHolidaysName | sensor / next_school_holidays |
-| nextSchoolHolidaysStartDate | sensor / next_school_holidays_start |
-| nextSchoolHolidaysEndDate | sensor / next_school_holidays_end |
-| schoolPeriod | sensor / school_period |
-| year | sensor / year |
-| region | sensor / region (identifiant API, par exemple martinique) |
-| academy | sensor / academy |
-| zones | sensor / zones |
-| version | sensor / version (version Python, pas version Node-RED) |
+| Vacances scolaires | Les vacances sont en cours aujourd’hui |
+| Vacances scolaires demain | Les vacances seront en cours demain |
+| Vacances en cours | Nom de la période actuelle |
+| Fin des vacances en cours | Date de reprise des cours |
+| Prochaines vacances scolaires | Nom de la prochaine période à commencer |
+| Début des prochaines vacances | Premier jour de cette période |
+| Fin des prochaines vacances | Date de reprise des cours après cette période |
+| Avant les vacances scolaires | Zéro pendant les vacances ; sinon, jours avant la prochaine période |
+| Jours avant les prochaines vacances | Jours avant la prochaine période, même pendant les vacances actuelles |
 
-Les quatre capteurs académie, région, zone et version sont classés diagnostics.
-Le compteur existant `days_until_school_holidays` vaut toujours zéro pendant les
-vacances. Le nouveau `next_school_holidays_countdown` compte vers la période suivante,
-même pendant les vacances en cours. Les deux capteurs week-end et jour ouvré restent
-également disponibles, bien que le payload Node-RED actuel ne les expose pas.
+Les vacances sont comptées **par journée** : le jour de départ est inclus et le jour
+de reprise est exclu. Le départ après la classe et le cas des élèves sans cours le
+samedi ne sont pas gérés à l’heure près.
 
-### Mise à jour depuis la version publiée 0.1.0
+### Informations complémentaires
 
-Remplacer le dossier `custom_components/french_holidays` puis redémarrer Home Assistant.
-Ne pas supprimer l’entrée de configuration : les identifiants existants seront conservés.
-Le cache ancien est rafraîchi pour récupérer la zone. Si le réseau est indisponible,
-les anciennes données restent utilisées et la zone est temporairement inconnue.
+| Entité | Valeur |
+|---|---|
+| Numéro du jour de la semaine | Dimanche = 0, lundi = 1, …, samedi = 6 |
+| Année civile | Par exemple 2026 |
+| Année scolaire | Par exemple 2026-2027, avec changement au 1er septembre |
+| Académie | Académie choisie |
+| Région des jours fériés | Identifiant de la région choisie |
+| Zone scolaire | Zone retournée par le calendrier officiel, par exemple Zone B |
+| Version de l’intégration | Version Python installée |
+
+L’académie, la région, la zone et la version sont regroupées parmi les entités de diagnostic.
+
+## Afficher les informations sur votre tableau de bord
+
+1. Ouvrez votre tableau de bord, puis **Modifier → Ajouter une carte**.
+2. Choisissez une carte **Entités** ou **Tuile**.
+3. Sélectionnez les entités de l’appareil **French Holidays**.
+4. Pour une vue compacte, ajoutez le prochain jour férié, sa date, les prochaines vacances et le compteur.
+
+Les identifiants des entités sont générés par Home Assistant. Retrouvez-les dans la
+fiche de l’intégration ou dans **Outils de développement → États** avant de les utiliser
+ dans une automatisation. Les couleurs et la présentation dépendent de votre thème et de la carte.
+
+Pour une automatisation de réveil, vous pouvez par exemple ajouter une condition
+sur **Jour ouvré = activé**, et éventuellement **Vacances scolaires = désactivé**.
+
+## Mise à jour
+
+Avec HACS, téléchargez la mise à jour proposée puis redémarrez Home Assistant.
+Si aucune mise à jour n’apparaît, consultez le dépôt et l’option de retéléchargement de HACS.
+
+Pour une installation manuelle, remplacez le dossier `custom_components/french_holidays`
+par celui du projet actualisé puis redémarrez Home Assistant.
+
+**Ne supprimez pas votre entrée de configuration pour mettre à jour de 0.1.0 à 0.1.1.**
+Les dix entités déjà publiées conservent leurs identifiants uniques et treize capteurs sont ajoutés.
+La compatibilité des identifiants d’une autre première version distribuée séparément n’est pas garantie.
+
+## Questions fréquentes
+
+**Le capteur affiche « Désactivé ». Est-ce une panne ?**
+
+Pour un capteur binaire, l’état `off` signifie que la condition est fausse :
+« Jour férié demain » désactivé signifie que demain n’est pas férié.
+C’est différent d’une entité désactivée dans ses paramètres.
+
+**Pourquoi certains capteurs sont-ils inconnus ?**
+
+Le nom du jour férié actuel est inconnu hors jour férié ; le nom et la fin des vacances
+actuelles sont inconnus hors vacances. Une prochaine période absente du calendrier
+ou des données non encore chargées peuvent aussi produire un état inconnu.
+
+**Que se passe-t-il si Internet tombe en panne ?**
+
+Après un premier chargement réussi, les calendriers sont conservés dans un cache
+persistant. L’intégration les réutilise et réessaie de joindre les sources.
+L’attribut `cached_data` indique le recours au cache après un échec réseau.
+Un calendrier dépassé peut produire des états inconnus. Sans cache au premier démarrage,
+l’intégration réessaie de charger les données.
+
+**À quelle fréquence les informations changent-elles ?**
+
+Les données officielles sont téléchargées chaque jour. Les états sont recalculés
+à minuit et vérifiés toutes les heures, selon le fuseau horaire de Home Assistant.
+Les dates scolaires sont actuellement interprétées en Europe/Paris ; les académies
+ultramarines doivent être vérifiées avant utilisation. Nantes est la configuration testée.
+
+**L’intégration n’apparaît pas après installation.**
+
+Vérifiez le chemin du dossier, redémarrez Home Assistant et rechargez la page.
+Consultez ensuite **Paramètres → Système → Journaux** en recherchant `french_holidays`.
+
+**Les noms restent en anglais ou une icône ne change pas.**
+
+Vérifiez la langue de votre profil, redémarrez Home Assistant et rechargez l’interface.
+Un nom ou une icône personnalisés manuellement dans Home Assistant peuvent prendre
+le dessus sur ceux fournis par l’intégration.
+
+## Sources officielles et assistance
+
+- [Calendrier des jours fériés](https://calendrier.api.gouv.fr/)
+- [Calendrier scolaire de l’Éducation nationale](https://data.education.gouv.fr/explore/dataset/fr-en-calendrier-scolaire/)
+- [Signaler un problème ou proposer une amélioration](https://github.com/tataille/homeassistant-french-holidays/issues)
+
+Pour un signalement, précisez votre version Home Assistant, la version de l’intégration,
+l’académie et la région sélectionnées, et les messages du journal utiles au diagnostic.
+
+Pour les utilisateurs du module original : [correspondance des champs Node-RED](docs/NODE_RED.md).
+Pour contribuer au code : [guide de développement](docs/DEVELOPMENT.md).
+
+Licence [Apache 2.0](LICENSE).
