@@ -8,7 +8,7 @@ from homeassistant.helpers.event import async_track_time_change
 from homeassistant.helpers.storage import Store
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.util import dt as dt_util
-from .const import DOMAIN
+from .const import DOMAIN, VERSION
 from .engine import normalize_school, validate_public, states
 
 _LOGGER = logging.getLogger(__name__)
@@ -25,6 +25,11 @@ class FrenchHolidaysCoordinator(DataUpdateCoordinator):
         self.store = Store(hass, 1, f"{DOMAIN}.{entry.entry_id}")
         entry.async_on_unload(async_track_time_change(hass, self._midnight, hour=0, minute=0, second=0))
 
+    def calendar_states(self):
+        return states(dt_util.now().date(), self.public, self.school,
+                      academy=self.entry.data["academy"],
+                      region=self.entry.data["region"], version=VERSION)
+
     async def async_load_cache(self):
         cached = await self.store.async_load()
         if cached:
@@ -32,6 +37,9 @@ class FrenchHolidaysCoordinator(DataUpdateCoordinator):
                 self.public = validate_public(cached["public"])
                 self.school = cached["school"]
                 self.updated = dt_util.parse_datetime(cached["updated"])
+                if any("zone" not in event for event in self.school):
+                    self.updated = None
+                    return  # Refresh legacy caches to obtain school zones.
                 if not self.school or self.updated is None:
                     raise ValueError("Invalid cache")
             except (ValueError, KeyError, TypeError):
@@ -39,7 +47,7 @@ class FrenchHolidaysCoordinator(DataUpdateCoordinator):
 
     async def _midnight(self, now):
         if self.public and self.school:
-            self.async_set_updated_data(states(dt_util.now().date(), self.public, self.school))
+            self.async_set_updated_data(self.calendar_states())
         await self.async_request_refresh()
 
     async def _get(self, url, params=None):
@@ -83,4 +91,4 @@ class FrenchHolidaysCoordinator(DataUpdateCoordinator):
                     raise UpdateFailed(f"Official calendars unavailable: {err}") from err
                 self.stale = True
                 _LOGGER.warning("Official calendars unavailable; using cached data: %s", err)
-        return states(dt_util.now().date(), self.public, self.school)
+        return self.calendar_states()
