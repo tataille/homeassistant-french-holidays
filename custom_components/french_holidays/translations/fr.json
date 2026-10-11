@@ -1,0 +1,54 @@
+{
+  "title": "French Holidays",
+  "config": {
+    "step": {
+      "user": {
+        "title": "French Holidays",
+        "description": "Choisissez indépendamment votre académie et la région des jours fériés.",
+        "data": {
+          "academy": "Académie",
+          "region": "Région des jours fériés"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Cette combinaison est déjà configurée."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "public_holiday": {
+        "name": "Jour férié aujourd’hui"
+      },
+      "public_holiday_tomorrow": {
+        "name": "Jour férié demain"
+      },
+      "school_holidays": {
+        "name": "Vacances scolaires"
+      },
+      "school_holidays_tomorrow": {
+        "name": "Vacances scolaires demain"
+      },
+      "weekend": {
+        "name": "Week-end"
+      },
+      "working_day": {
+        "name": "Jour ouvré"
+      }
+    },
+    "sensor": {
+      "next_public_holiday": {
+        "name": "Prochain jour férié"
+      },
+      "next_public_holiday_date": {
+        "name": "Date du prochain jour férié"
+      },
+      "days_until_school_holidays": {
+        "name": "Avant les vacances scolaires"
+      },
+      "school_holiday_name": {
+        "name": "Vacances en cours"
+      }
+    }
+  }
+}
