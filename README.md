@@ -16,6 +16,12 @@ pour adapter vos automatisations : réveil, chauffage, volets ou notifications.
 L’intégration fonctionne sans Node-RED et sans MQTT. Elle se configure depuis
 l’interface Home Assistant, sans ajouter de configuration YAML.
 
+## Origine du projet
+
+French Holidays est le portage pour Home Assistant du module Node-RED [node-red-french-holidays](https://github.com/tataille/node-red-french-holidays), développé par le même auteur.
+
+Cette intégration reprend les informations et fonctionnalités du module original dans une implémentation native en Python, adaptée à Home Assistant. Elle fonctionne de manière autonome, sans nécessiter Node-RED ni MQTT. Le module Node-RED reste un projet distinct et disponible pour les utilisateurs de Node-RED.
+
 ## Ce que vous obtenez
 
 - Les jours fériés d’aujourd’hui et de demain, le nom du jour férié actuel et le prochain jour férié.
