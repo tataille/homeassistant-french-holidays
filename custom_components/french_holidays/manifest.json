@@ -1,0 +1,13 @@
+{
+  "domain": "french_holidays",
+  "name": "French Holidays",
+  "version": "0.1.0",
+  "config_flow": true,
+  "documentation": "https://github.com/tataille/homeassistant-french-holidays",
+  "issue_tracker": "https://github.com/tataille/homeassistant-french-holidays/issues",
+  "codeowners": [
+    "@tataille"
+  ],
+  "iot_class": "cloud_polling",
+  "requirements": []
+}
