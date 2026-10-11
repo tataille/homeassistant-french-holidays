@@ -48,6 +48,45 @@
       },
       "school_holiday_name": {
         "name": "Vacances en cours"
+      },
+      "public_holiday_name": {
+        "name": "Nom du jour férié actuel"
+      },
+      "school_holidays_end_date": {
+        "name": "Fin des vacances en cours"
+      },
+      "next_school_holidays": {
+        "name": "Prochaines vacances scolaires"
+      },
+      "next_school_holidays_start": {
+        "name": "Début des prochaines vacances"
+      },
+      "next_school_holidays_end": {
+        "name": "Fin des prochaines vacances"
+      },
+      "next_school_holidays_countdown": {
+        "name": "Jours avant les prochaines vacances"
+      },
+      "day": {
+        "name": "Numéro du jour de la semaine"
+      },
+      "year": {
+        "name": "Année civile"
+      },
+      "school_period": {
+        "name": "Année scolaire"
+      },
+      "academy": {
+        "name": "Académie"
+      },
+      "region": {
+        "name": "Région des jours fériés"
+      },
+      "zones": {
+        "name": "Zone scolaire"
+      },
+      "version": {
+        "name": "Version de l’intégration"
       }
     }
   }
