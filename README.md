@@ -38,7 +38,7 @@ Cette intégration reprend les informations et fonctionnalités du module origin
 
 ## Aperçu des informations disponibles
 
-![Aperçu illustré des 23 entités French Holidays](docs/images/entities-overview.svg)
+![Aperçu illustré des 23 entités French Holidays](docs/images/settings.gif)
 
 *Illustration des informations disponibles, avec des valeurs d’exemple. Ce visuel n’est pas une capture d’écran de Home Assistant et ne correspond pas à une carte installée automatiquement. La présentation réelle dépend de votre tableau de bord et de votre thème.*
 
