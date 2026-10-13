@@ -89,5 +89,18 @@
         "name": "Integration version"
       }
     }
+  },
+  "selector": {
+    "region": {
+      "options": {
+        "metropole": "Metropolitan France",
+        "alsace-moselle": "Alsace-Moselle",
+        "guadeloupe": "Guadeloupe",
+        "martinique": "Martinique",
+        "guyane": "French Guiana",
+        "la-reunion": "Réunion",
+        "mayotte": "Mayotte"
+      }
+    }
   }
 }
