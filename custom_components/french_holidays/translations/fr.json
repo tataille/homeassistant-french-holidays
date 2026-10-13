@@ -3,7 +3,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "French Holidays",
+        "title": "Jours fériés et vacances scolaires",
         "description": "Choisissez indépendamment votre académie et la région des jours fériés.",
         "data": {
           "academy": "Académie",
@@ -87,6 +87,19 @@
       },
       "version": {
         "name": "Version de l’intégration"
+      }
+    }
+  },
+  "selector": {
+    "region": {
+      "options": {
+        "metropole": "France métropolitaine",
+        "alsace-moselle": "Alsace-Moselle",
+        "guadeloupe": "Guadeloupe",
+        "martinique": "Martinique",
+        "guyane": "Guyane",
+        "la-reunion": "La Réunion",
+        "mayotte": "Mayotte"
       }
     }
   }
