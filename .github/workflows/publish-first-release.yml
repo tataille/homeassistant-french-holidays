@@ -1,81 +1,89 @@
-name: Publish validated release
+name: Publish release
 on:
   push:
-    branches: [main]
-    paths:
-      - .github/workflows/publish-first-release.yml
-  workflow_dispatch:
+    tags:
+      - "v*"
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: publish-v0.1.2
+  group: publish-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: write
     env:
-      GH_TOKEN: ${{ github.token }}
-      RELEASE_TARGET: ${{ github.sha }}
+      TAG_NAME: ${{ github.ref_name }}
     steps:
-      - name: Require successful validation of release source
-        run: |
-          gh api repos/"$GITHUB_REPOSITORY"/actions/runs/38170844625 > validation.json
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          run = json.loads(Path("validation.json").read_text())
-          assert run["head_sha"] == "1a7de6c3a6a7a6181befb0b085fea57ed282fd97"
-          assert run["conclusion"] == "success"
-          PY
-      - uses: actions/checkout@v4
+      - name: Check out release tag
+        uses: actions/checkout@v4
         with:
+          ref: ${{ github.ref }}
           fetch-depth: 0
-          ref: 1a7de6c3a6a7a6181befb0b085fea57ed282fd97
-      - uses: actions/setup-python@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: "3.13"
+
       - name: Verify version and run tests
         run: |
           python - <<'PY'
           import json
+          import os
+          import re
           from pathlib import Path
-          manifest = json.loads(Path("custom_components/french_holidays/manifest.json").read_text())
-          assert manifest["version"] == "0.1.2"
+
+          tag = os.environ["TAG_NAME"]
+          if not re.fullmatch(r"v[0-9]+[.][0-9]+[.][0-9]+", tag):
+              raise SystemExit(f"Invalid release tag: {tag}")
+          version = json.loads(Path("custom_components/french_holidays/manifest.json").read_text())["version"]
+          if tag != f"v{version}":
+              raise SystemExit(f"Tag {tag} does not match manifest version {version}")
+          notes = Path("docs/releases") / f"{tag}.md"
+          if not notes.is_file():
+              raise SystemExit(f"Missing release notes: {notes}")
           PY
           python -m unittest discover -s tests -v
           python -m compileall -q custom_components
-      - name: Package verified release source
+
+      - name: Package release
         run: |
           python - <<'PY'
+          import os
           import subprocess
-          import tempfile
           import zipfile
           from pathlib import Path
-          with tempfile.TemporaryDirectory() as temporary:
-              root = Path(temporary)
-              archive = root / "source.zip"
-              subprocess.run(["git", "archive", "--format=zip", "--output", str(archive), "1a7de6c3a6a7a6181befb0b085fea57ed282fd97"], check=True)
-              with zipfile.ZipFile(archive) as source, zipfile.ZipFile("homeassistant-french-holidays-v0.1.2.zip", "w", zipfile.ZIP_DEFLATED) as output:
-                  for name in source.namelist():
-                      if name.startswith(("custom_components/", "docs/")) or name in {"README.md", "LICENSE", "hacs.json"}:
-                          if not name.endswith("/"):
-                              output.writestr(name, source.read(name))
+
+          tag = os.environ["TAG_NAME"]
+          archive = Path(f"homeassistant-french-holidays-{tag}.zip")
+          files = subprocess.check_output(
+              ["git", "ls-tree", "-r", "--name-only", "HEAD"], text=True
+          ).splitlines()
+          included = [
+              path for path in files
+              if path.startswith(("custom_components/", "docs/"))
+              or path in {"README.md", "LICENSE", "hacs.json"}
+          ]
+          with zipfile.ZipFile(archive, "w", zipfile.ZIP_DEFLATED) as output:
+              for path in included:
+                  output.write(path, arcname=f"homeassistant-french-holidays/{path}")
           PY
-          sha256sum homeassistant-french-holidays-v0.1.2.zip > SHA256SUMS.txt
-      - name: Publish GitHub release with install archive
+          sha256sum "homeassistant-french-holidays-$TAG_NAME.zip" > SHA256SUMS.txt
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          if gh release view v0.1.2 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
-            echo "Release v0.1.2 already exists; leaving it unchanged."
-            exit 0
-          fi
-          gh release create v0.1.2 \
-            homeassistant-french-holidays-v0.1.2.zip SHA256SUMS.txt \
+          gh release create "$TAG_NAME" \
+            "homeassistant-french-holidays-$TAG_NAME.zip" SHA256SUMS.txt \
             --repo "$GITHUB_REPOSITORY" \
-            --target "$RELEASE_TARGET" \
-            --title "French Holidays v0.1.2 — Préparation au catalogue HACS" \
-            --notes-file docs/releases/v0.1.2.md \
+            --target "$GITHUB_SHA" \
+            --title "French Holidays $TAG_NAME" \
+            --notes-file "docs/releases/$TAG_NAME.md" \
             --latest
