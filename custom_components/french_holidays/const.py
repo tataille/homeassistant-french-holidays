@@ -3,4 +3,4 @@ ACADEMIES = ["Aix-Marseille", "Amiens", "Besançon", "Bordeaux", "Clermont-Ferra
 REGIONS = ["metropole", "alsace-moselle", "guadeloupe", "martinique", "guyane", "la-reunion", "mayotte"]
 DEFAULT_ACADEMY = "Nantes"
 DEFAULT_REGION = "martinique"
-VERSION = "0.1.2"
+VERSION = "0.1.3"
