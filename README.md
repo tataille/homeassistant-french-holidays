@@ -86,8 +86,9 @@ L’intégration propose deux choix indépendants :
 Ce choix ne sélectionne pas les vacances scolaires de Martinique.
 Pour un usage local à Nantes, choisissez généralement Nantes et `metropole`.
 
-Les régions proposées sont `metropole`, `alsace-moselle`, `guadeloupe`, `martinique`,
-`guyane`, `la-reunion` et `mayotte`.
+Dans le formulaire, ces régions s’affichent avec des noms lisibles traduits selon la langue
+de Home Assistant. Les identifiants enregistrés restent `metropole`, `alsace-moselle`,
+`guadeloupe`, `martinique`, `guyane`, `la-reunion` et `mayotte`.
 
 Pour changer votre combinaison dans cette version, supprimez l’entrée de l’intégration
 puis ajoutez-la avec les nouveaux paramètres. Pour une simple mise à jour du code,
@@ -124,6 +125,9 @@ de vos congés personnels ni des vacances scolaires.
 | Avant les vacances scolaires | Zéro pendant les vacances ; sinon, jours avant la prochaine période |
 | Jours avant les prochaines vacances | Jours avant la prochaine période, même pendant les vacances actuelles |
 
+Home Assistant affiche l’unité `d` après ces compteurs : elle signifie « jour » et est
+ajoutée automatiquement à la valeur numérique.
+
 Les vacances sont comptées **par journée** : le jour de départ est inclus et le jour
 de reprise est exclu. Le départ après la classe et le cas des élèves sans cours le
 samedi ne sont pas gérés à l’heure près.
@@ -151,7 +155,7 @@ L’académie, la région, la zone et la version sont regroupées parmi les enti
 
 Les identifiants des entités sont générés par Home Assistant. Retrouvez-les dans la
 fiche de l’intégration ou dans **Outils de développement → États** avant de les utiliser
- dans une automatisation. Les couleurs et la présentation dépendent de votre thème et de la carte.
+dans une automatisation. Les couleurs et la présentation dépendent de votre thème et de la carte.
 
 Pour une automatisation de réveil, vous pouvez par exemple ajouter une condition
 sur **Jour ouvré = activé**, et éventuellement **Vacances scolaires = désactivé**.
