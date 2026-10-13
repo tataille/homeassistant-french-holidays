@@ -27,6 +27,11 @@ class EngineTests(unittest.TestCase):
         state=engine.states(date(2026,4,12),self.public,self.school)
         self.assertTrue(state['weekend'])
         self.assertEqual(state['days_until_school_holidays'],0)
+    def test_countdown_before_school_holidays(self):
+        state = engine.states(date(2026, 4, 1), self.public, self.school)
+        self.assertEqual(state["days_until_school_holidays"], 10)
+        self.assertEqual(state["next_school_holidays_countdown"], 10)
+
     def test_unknown_public_year(self):
         self.assertIsNone(engine.states(date(2030,1,1),self.public,self.school)['public_holiday'])
     def test_invalid_payload(self):
