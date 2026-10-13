@@ -48,7 +48,7 @@ Cette intégration reprend les informations et fonctionnalités du module origin
 - Un accès Internet pour télécharger les calendriers officiels au premier démarrage.
 - HACS pour l’installation guidée, ou un accès au dossier de configuration pour l’installation manuelle.
 
-Le projet est une intégration personnalisée en version **0.1.2**.
+Le projet est une intégration personnalisée en version **0.1.3**.
 Il n’est pas intégré à Home Assistant Core ni référencé dans le catalogue HACS par défaut.
 
 ## Installer avec HACS
