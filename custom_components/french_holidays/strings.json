@@ -11,6 +11,9 @@
         }
       }
     },
+    "error": {
+      "invalid_selection": "Select a valid academy and public holiday region."
+    },
     "abort": {
       "already_configured": "This combination is already configured."
     }
