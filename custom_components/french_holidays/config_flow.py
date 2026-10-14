@@ -1,7 +1,11 @@
 """UI configuration for French holidays."""
 import voluptuous as vol
 from homeassistant import config_entries
-from homeassistant.helpers.selector import SelectSelector, SelectSelectorConfig
+from homeassistant.helpers.selector import (
+    SelectSelector,
+    SelectSelectorConfig,
+    SelectSelectorMode,
+)
 
 from .const import ACADEMIES, DOMAIN, REGIONS
 
@@ -48,11 +52,17 @@ class FrenchHolidaysConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="user",
             data_schema=vol.Schema(
                 {
-                    vol.Required("academy"): vol.In(ACADEMIES),
+                    vol.Required("academy"): SelectSelector(
+                        SelectSelectorConfig(
+                            options=ACADEMIES,
+                            mode=SelectSelectorMode.DROPDOWN,
+                        )
+                    ),
                     vol.Required("region"): SelectSelector(
                         SelectSelectorConfig(
                             options=REGIONS,
                             translation_key="region",
+                            mode=SelectSelectorMode.DROPDOWN,
                         )
                     ),
                 }
