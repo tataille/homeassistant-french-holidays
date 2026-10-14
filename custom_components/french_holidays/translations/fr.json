@@ -44,7 +44,8 @@
         "name": "Date du prochain jour férié"
       },
       "days_until_school_holidays": {
-        "name": "Avant les vacances scolaires"
+        "name": "Avant les vacances scolaires",
+        "unit_of_measurement": "j"
       },
       "school_holiday_name": {
         "name": "Vacances en cours"
@@ -65,7 +66,8 @@
         "name": "Fin des prochaines vacances"
       },
       "next_school_holidays_countdown": {
-        "name": "Jours avant les prochaines vacances"
+        "name": "Jours avant les prochaines vacances",
+        "unit_of_measurement": "j"
       },
       "day": {
         "name": "Numéro du jour de la semaine"
