@@ -12,8 +12,6 @@ class FrenchHolidaysSensor(FrenchHolidaysEntity, SensorEntity):
         super().__init__(coordinator, key, label)
         if key in {"next_public_holiday_date", "school_holidays_end_date", "next_school_holidays_start", "next_school_holidays_end"}:
             self._attr_device_class = SensorDeviceClass.DATE
-        if key in {"days_until_school_holidays", "next_school_holidays_countdown"}:
-            self._attr_native_unit_of_measurement = "d"
 
         if key in {"academy", "region", "zones", "version"}:
             self._attr_entity_category = EntityCategory.DIAGNOSTIC
