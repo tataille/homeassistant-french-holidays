@@ -11,6 +11,9 @@
         }
       }
     },
+    "error": {
+      "invalid_selection": "Sélectionnez une académie valide et une région des jours fériés."
+    },
     "abort": {
       "already_configured": "Cette combinaison est déjà configurée."
     }
