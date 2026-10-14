@@ -44,7 +44,8 @@
         "name": "Next public holiday date"
       },
       "days_until_school_holidays": {
-        "name": "Days until school holidays"
+        "name": "Days until school holidays",
+        "unit_of_measurement": "d"
       },
       "school_holiday_name": {
         "name": "School holiday name"
@@ -65,7 +66,8 @@
         "name": "Next school holidays end"
       },
       "next_school_holidays_countdown": {
-        "name": "Next school holidays countdown"
+        "name": "Next school holidays countdown",
+        "unit_of_measurement": "d"
       },
       "day": {
         "name": "Day of week"
