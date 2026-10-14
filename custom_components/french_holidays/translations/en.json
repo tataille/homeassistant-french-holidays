@@ -11,6 +11,9 @@
         }
       }
     },
+    "error": {
+      "invalid_selection": "Select a valid academy and public holiday region."
+    },
     "abort": {
       "already_configured": "This combination is already configured."
     }
@@ -87,6 +90,19 @@
       },
       "version": {
         "name": "Integration version"
+      }
+    }
+  },
+  "selector": {
+    "region": {
+      "options": {
+        "metropole": "Metropolitan France",
+        "alsace-moselle": "Alsace-Moselle",
+        "guadeloupe": "Guadeloupe",
+        "martinique": "Martinique",
+        "guyane": "French Guiana",
+        "la-reunion": "Réunion",
+        "mayotte": "Mayotte"
       }
     }
   }
