@@ -48,7 +48,7 @@ Cette intégration reprend les informations et fonctionnalités du module origin
 - Un accès Internet pour télécharger les calendriers officiels au premier démarrage.
 - HACS pour l’installation guidée, ou un accès au dossier de configuration pour l’installation manuelle.
 
-Le projet est une intégration personnalisée en version **0.1.3**.
+Le projet est une intégration personnalisée en version **0.1.4**.
 Il n’est pas intégré à Home Assistant Core ni référencé dans le catalogue HACS par défaut.
 
 ## Installer avec HACS
@@ -125,8 +125,8 @@ de vos congés personnels ni des vacances scolaires.
 | Avant les vacances scolaires | Zéro pendant les vacances ; sinon, jours avant la prochaine période |
 | Jours avant les prochaines vacances | Jours avant la prochaine période, même pendant les vacances actuelles |
 
-Home Assistant affiche l’unité `d` après ces compteurs : elle signifie « jour » et est
-ajoutée automatiquement à la valeur numérique.
+L’unité affichée après ces compteurs dépend de la langue de votre profil Home Assistant :
+`j` en français et `d` en anglais. Elle est ajoutée automatiquement à la valeur numérique.
 
 Les vacances sont comptées **par journée** : le jour de départ est inclus et le jour
 de reprise est exclu. Le départ après la classe et le cas des élèves sans cours le
