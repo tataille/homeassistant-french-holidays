@@ -35,6 +35,6 @@ Link to successful hassfest action (if integration): https://github.com/tataille
 
 I am the owner and maintainer of this repository. French Holidays provides French public holidays and school holidays for Home Assistant, with academy and public holiday region selection, 23 entities, French and English translations, and persistent calendar caching. It is a native Python port of my Node-RED module and requires neither Node-RED nor MQTT.
 
-The released `hacs.json` declares `country: FR`. Local branding is provided in `custom_components/french_holidays/brand/`.
+The released `hacs.json` declares `country: FR`. Local branding is provided in `custom_components/tataille_french_holidays/brand/`.
 
 <!-- tid:73253df5-5376-4e68-8c16-b234da6a2de3 -->

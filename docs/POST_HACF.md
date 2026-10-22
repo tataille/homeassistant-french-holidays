@@ -26,15 +26,17 @@ Deux exemples concrets sont disponibles : [notification de réveil les jours ouv
 
 Prérequis : Home Assistant **2026.1 ou plus récent**.
 
-1. Téléchargez [le ZIP de la version 0.1.2](https://github.com/tataille/homeassistant-french-holidays/releases/download/v0.1.2/homeassistant-french-holidays-v0.1.2.zip).
-2. Décompressez l’archive et copiez `custom_components/french_holidays` dans le dossier `custom_components` de votre configuration.
-3. Vérifiez le chemin `/config/custom_components/french_holidays/manifest.json`.
+1. Téléchargez [le ZIP de la version 0.2.0](https://github.com/tataille/homeassistant-french-holidays/releases/download/v0.2.0/homeassistant-french-holidays-v0.2.0.zip).
+2. Décompressez l’archive et copiez `custom_components/tataille_french_holidays` dans le dossier `custom_components` de votre configuration.
+3. Vérifiez le chemin `/config/custom_components/tataille_french_holidays/manifest.json`.
 4. Redémarrez Home Assistant.
 5. Dans **Paramètres → Appareils et services → Ajouter une intégration**, recherchez **French Holidays**.
 
 Pour Home Assistant Docker, utilisez le dossier de l’hôte monté sur `/config`.
 
 L’installation via HACS comme dépôt personnalisé est également possible : ajoutez `https://github.com/tataille/homeassistant-french-holidays` avec le type **Intégration**. [La demande d’ajout au catalogue HACS est en attente d’examen](https://github.com/hacs/default/pull/11829).
+
+**Migration depuis la version 0.1.x** : le domaine change. Supprimez l’ancienne entrée French Holidays, retirez le dossier `custom_components/french_holidays`, puis installez la version 0.2.0 et ajoutez de nouveau l’intégration. Les identifiants des entités seront recréés.
 
 **Quelques précisions**
 

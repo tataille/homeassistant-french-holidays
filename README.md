@@ -48,7 +48,7 @@ Cette intégration reprend les informations et fonctionnalités du module origin
 - Un accès Internet pour télécharger les calendriers officiels au premier démarrage.
 - HACS pour l’installation guidée, ou un accès au dossier de configuration pour l’installation manuelle.
 
-Le projet est une intégration personnalisée en version **0.1.4**.
+Le projet est une intégration personnalisée en version **0.2.0**.
 Il n’est pas intégré à Home Assistant Core ni référencé dans le catalogue HACS par défaut.
 
 ## Installer avec HACS
@@ -66,8 +66,8 @@ Le bouton ouvre ce dépôt dans HACS, qui doit déjà être installé. Vous pouv
 ## Installer manuellement
 
 1. [Téléchargez le projet](https://github.com/tataille/homeassistant-french-holidays/archive/refs/heads/main.zip) et décompressez l’archive.
-2. Copiez le dossier `custom_components/french_holidays` dans le dossier de configuration de Home Assistant.
-3. Vérifiez que vous obtenez le chemin `/config/custom_components/french_holidays/manifest.json`.
+2. Copiez le dossier `custom_components/tataille_french_holidays` dans le dossier de configuration de Home Assistant.
+3. Vérifiez que vous obtenez le chemin `/config/custom_components/tataille_french_holidays/manifest.json`.
 4. Redémarrez Home Assistant, puis ajoutez **French Holidays** dans **Paramètres → Appareils et services**.
 
 Avec Home Assistant Docker, copiez les fichiers dans le dossier de l’hôte monté
@@ -174,12 +174,10 @@ Remplacez les identifiants d’entités par ceux de votre installation, puis ada
 Avec HACS, téléchargez la mise à jour proposée puis redémarrez Home Assistant.
 Si aucune mise à jour n’apparaît, consultez le dépôt et l’option de retéléchargement de HACS.
 
-Pour une installation manuelle, remplacez le dossier `custom_components/french_holidays`
+Pour une installation manuelle, remplacez le dossier `custom_components/tataille_french_holidays`
 par celui du projet actualisé puis redémarrez Home Assistant.
 
-**Ne supprimez pas votre entrée de configuration pour mettre à jour de 0.1.0 à 0.1.1.**
-Les dix entités déjà publiées conservent leurs identifiants uniques et treize capteurs sont ajoutés.
-La compatibilité des identifiants d’une autre première version distribuée séparément n’est pas garantie.
+**Migration depuis la version 0.1.x :** le domaine Home Assistant change en 0.2.0. Supprimez l’ancienne entrée de l’intégration, retirez le dossier `custom_components/french_holidays`, puis installez et configurez de nouveau French Holidays. Les entités seront recréées avec de nouveaux identifiants ; adaptez les cartes et automatisations qui les utilisent.
 
 ## Questions fréquentes
 
