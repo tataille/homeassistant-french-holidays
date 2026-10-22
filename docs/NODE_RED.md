@@ -38,9 +38,10 @@ vacances. Le nouveau `next_school_holidays_countdown` compte vers la période su
 même pendant les vacances en cours. Les deux capteurs week-end et jour ouvré restent
 également disponibles, bien que le payload Node-RED actuel ne les expose pas.
 
-### Mise à jour depuis la version publiée 0.1.0
+### Migration depuis French Holidays 0.1.x
 
-Remplacer le dossier `custom_components/french_holidays` puis redémarrer Home Assistant.
-Ne pas supprimer l’entrée de configuration : les identifiants existants seront conservés.
-Le cache ancien est rafraîchi pour récupérer la zone. Si le réseau est indisponible,
-les anciennes données restent utilisées et la zone est temporairement inconnue.
+À partir de la version 0.2.0, le domaine Home Assistant est `tataille_french_holidays`.
+Supprimez l’ancienne entrée, retirez le dossier `custom_components/french_holidays`,
+installez la nouvelle version dans `custom_components/tataille_french_holidays`, puis
+ajoutez de nouveau l’intégration. Les identifiants des entités seront recréés ; mettez
+à jour les tableaux de bord et automatisations qui les référencent.

@@ -2,7 +2,7 @@ import importlib.util
 from pathlib import Path
 from datetime import date
 import unittest
-spec = importlib.util.spec_from_file_location("engine", Path(__file__).parents[1]/"custom_components/french_holidays/engine.py")
+spec = importlib.util.spec_from_file_location("engine", Path(__file__).parents[1]/"custom_components/tataille_french_holidays/engine.py")
 engine = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(engine)
 
